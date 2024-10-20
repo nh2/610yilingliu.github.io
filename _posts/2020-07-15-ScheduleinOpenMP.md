@@ -23,7 +23,11 @@ for(conditions){
     do something
 }
 ```
-Of course you can use `#pragma omp parallel for` directly without scheduling, it is equal to `#pragma omp parallel for schedule(static,1)`[1]
+Of course you can use `#pragma omp parallel for` directly without scheduling. Chooses an implementation-defined scheduling type. [1]
+
+`#pragma omp parallel for(static)` splits the loop range into as-large-as-possible contiguous sections.
+This is good for cache locality as it avoids [false sharing](https://en.wikipedia.org/wiki/False_sharing).
+It is thus different from `#pragma omp parallel for schedule(static,1)`, which is round-robin scheduling. [1]
 
 If you run
 ```c
